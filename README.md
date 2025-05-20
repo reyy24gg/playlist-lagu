@@ -1,1 +1,1 @@
-![lgn jpg](https://github.com/user-attachments/assets/9445e38b-8b36-4058-89c6-50f70c99428f)
+![image](https://github.com/user-attachments/assets/0a5ee04b-cd7b-43d1-a8b5-29bee00f4efb)
