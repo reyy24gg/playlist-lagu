@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>My Music Library (JS Version)</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; padding: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        /* Form Styling */
+        .form-box { background: #181818; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        input { background: #282828; border: none; padding: 10px; color: white; margin-right: 10px; border-radius: 4px; }
+        button { background: #1DB954; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        
+        /* List Styling */
+        .song-item { background: #181818; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; align-items: center; gap: 15px; }
+        .song-info { flex-grow: 1; }
+        .song-info h4 { margin: 0; }
+        .song-info p { margin: 5px 0 0; color: #b3b3b3; font-size: 14px; }
+        .btn-delete { background: #ff4d4d; font-size: 12px; padding: 5px 10px; }
+        audio { height: 30px; filter: invert(100%); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🎵 My Playlist</h1>
+    </div>
+
+    <div class="form-box">
+        <h3>Tambah Lagu Baru</h3>
+        <input type="text" id="title" placeholder="Judul Lagu">
+        <input type="text" id="artist" placeholder="Nama Penyanyi">
+        <input type="text" id="url" placeholder="URL File MP3 (Link)">
+        <button onclick="addSong()">TAMBAH</button>
+        <p style="font-size: 12px; color: #b3b3b3; margin-top: 10px;">*Gunakan link URL MP3 (misal dari Google Drive/Dropbox)</p>
+    </div>
+
+    <div id="playlist"></div>
+</div>
+
+<script>
+    // Fungsi memuat lagu dari LocalStorage saat web dibuka
+    window.onload = function() {
+        displaySongs();
+    };
+
+    function addSong() {
+        const title = document.getElementById('title').value;
+        const artist = document.getElementById('artist').value;
+        const url = document.getElementById('url').value;
+
+        if(title && artist && url) {
+            const newSong = { id: Date.now(), title, artist, url };
+            
+            // Ambil data lama dari LocalStorage
+            let songs = JSON.parse(localStorage.getItem('mySongs')) || [];
+            songs.push(newSong);
+            
+            // Simpan kembali
+            localStorage.setItem('mySongs', JSON.stringify(songs));
+            
+            // Reset input & tampilkan
+            document.getElementById('title').value = '';
+            document.getElementById('artist').value = '';
+            document.getElementById('url').value = '';
+            displaySongs();
+        } else {
+            alert("Isi semua data ya!");
+        }
+    }
+
+    function displaySongs() {
+        const playlist = document.getElementById('playlist');
+        playlist.innerHTML = '';
+        const songs = JSON.parse(localStorage.getItem('mySongs')) || [];
+
+        songs.forEach(song => {
+            playlist.innerHTML += `
+                <div class="song-item">
+                    <div class="song-info">
+                        <h4>${song.title}</h4>
+                        <p>${song.artist}</p>
+                    </div>
+                    <audio controls>
+                        <source src="${song.url}" type="audio/mpeg">
+                    </audio>
+                    <button class="btn-delete" onclick="deleteSong(${song.id})">Hapus</button>
+                </div>
+            `;
+        });
+    }
+
+    function deleteSong(id) {
+        let songs = JSON.parse(localStorage.getItem('mySongs')) || [];
+        songs = songs.filter(song => song.id !== id);
+        localStorage.setItem('mySongs', JSON.stringify(songs));
+        displaySongs();
+    }
+</script>
+
+</body>
+</html>
