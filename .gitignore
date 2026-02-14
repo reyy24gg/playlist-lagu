@@ -1,0 +1,18 @@
+# Mengabaikan folder penyimpanan file (agar repo tidak berat)
+# Kita hanya menyisakan folder, tapi tidak isinya
+/uploads/*
+/images/*
+
+# Kecualikan file .gitkeep agar folder tetap terdeteksi oleh Git
+!/uploads/.gitkeep
+!/images/.gitkeep
+
+# Mengabaikan file konfigurasi database (keamanan kredensial)
+db_config.php
+
+# Mengabaikan file sistem operasi
+Thumbs.db
+.DS_Store
+
+# Mengabaikan file log error
+*.log
