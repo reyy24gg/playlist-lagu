@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lagu Favorit</title>
+    <title>My Music Player - 10 Songs</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<link rel="stylesheet" href="style.css">
 <body>
-  <div id="container">
+    <div class="player-container">
+        <h2>Now Playing</h2>
+        <div class="music-info">
+            <h3 id="title">Pilih Lagu</h3>
+        </div>
+        
+        <audio id="audio" src=""></audio>
 
-    
-  </div>
+        <div class="controls">
+            <button id="prev" class="action-btn">Prev</button>
+            <button id="play" class="action-btn">Play</button>
+            <button id="next" class="action-btn">Next</button>
+        </div>
+
+        <div class="playlist-container">
+            <h4>Playlist</h4>
+            <ul id="playlist"></ul>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

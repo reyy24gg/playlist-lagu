@@ -1,36 +1,88 @@
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('play');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const title = document.getElementById('title');
+const playlistElement = document.getElementById('playlist');
 
-//membuat data array berisi 3 lagu favorit (judul, penyanyi, jumlah_likes, jumlah_play)
-
-var lagu = [
-  ['Fuwa - Fuwa Time', 'K-ON', 9820, 12111, 'fw.jpeg'],
-  ['Listen', 'K-On', 7500, 9600, 'ls.jpeg'],
-  ['Dont Say Lazy', 'K-On', 8000, 11000, 'dsz.jpeg'],
-  ['Sajak Usang Kelas Pekerja', 'The Cloves and The Tobacco', 4000, 8000, 'sjk.jpeg'],
-  ['Biarkan Berlari', 'The Cloves and The Tobacco', 1500, 2300, 'bbr.jpeg'],
-  ['Kota Di Utara', 'The Cloves and The Tobacco', 2440, 5400, 'kdt.jpeg'],
-  ['Sajak Usang Kelas Pekerja', 'Kitauji High School', 4000, 8000, 'rct.jpeg'],
-  ['Hibike! Euphonium', 'Kitauji High School', 1500, 2300, 'he.jpeg'],
-  ['Tutti!', 'Kitauji High School', 2440, 5400, 'tut.jpeg'],
-  
+// Data 10 Lagu
+const songs = [
+    { name: 'Lagu Ke-1', file: 'https://soundcloud.com/i-putu-sastra-yudiana/sedia-aku-sebelum-hujan-mp3?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing' },
+    { name: 'Lagu Ke-2', file: 'lagu2' },
+    { name: 'Lagu Ke-3', file: 'lagu3' },
+    { name: 'Lagu Ke-4', file: 'lagu4' },
+    { name: 'Lagu Ke-5', file: 'lagu5' },
+    { name: 'Lagu Ke-6', file: 'lagu6' },
+    { name: 'Lagu Ke-7', file: 'lagu7' },
+    { name: 'Lagu Ke-8', file: 'lagu8' },
+    { name: 'Lagu Ke-9', file: 'lagu9' },
+    { name: 'Lagu Ke-10', file: 'lagu10' }
 ];
 
-var element = `` 
-for (let i = 0; i < lagu.length; i++) {
-  element += `<div class="lagu">
-                <h2>${lagu[i][0]}</h2>
-                <small>
-                     <i>Oleh ${lagu[i][1]}</i>
-                </small>
-                <img src="img/${lagu[i][4]}" alt="" srcset="">
-                <div class="bawah">
-                     <div class="kanan">${lagu[i][2]}</div>
-                     <div class="kiri">${lagu[i][3]}</div>
-                </div>
-              </div>`
+let songIndex = 0;
+
+// Load Lagu Pertama Kali
+loadSong(songs[songIndex]);
+
+// Fungsi Load Lagu
+function loadSong(song) {
+    title.innerText = song.name;
+    audio.src = `${song.file}.mp3`;
+    updatePlaylistUI();
 }
 
+function playSong() {
+    audio.play();
+    playBtn.innerText = 'Pause';
+}
 
+function pauseSong() {
+    audio.pause();
+    playBtn.innerText = 'Play';
+}
 
-var konten = document.getElementById("container");
+// Play / Pause Toggle
+playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        playSong();
+    } else {
+        pauseSong();
+    }
+});
 
-konten.innerHTML = element;
+// Ganti Lagu
+nextBtn.addEventListener('click', () => {
+    songIndex = (songIndex + 1) % songs.length;
+    loadSong(songs[songIndex]);
+    playSong();
+});
+
+prevBtn.addEventListener('click', () => {
+    songIndex = (songIndex - 1 + songs.length) % songs.length;
+    loadSong(songs[songIndex]);
+    playSong();
+});
+
+// Generate Playlist Otomatis
+songs.forEach((song, index) => {
+    const li = document.createElement('li');
+    li.innerText = song.name;
+    li.addEventListener('click', () => {
+        songIndex = index;
+        loadSong(songs[songIndex]);
+        playSong();
+    });
+    playlistElement.appendChild(li);
+});
+
+// Tandai lagu yang sedang diputar di Playlist
+function updatePlaylistUI() {
+    const listItems = document.querySelectorAll('#playlist li');
+    listItems.forEach((item, index) => {
+        if (index === songIndex) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+}
