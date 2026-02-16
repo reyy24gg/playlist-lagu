@@ -2,104 +2,92 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>My Music Library (JS Version)</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; padding: 20px; }
-        .container { max-width: 800px; margin: auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        
-        /* Form Styling */
-        .form-box { background: #181818; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
-        input { background: #282828; border: none; padding: 10px; color: white; margin-right: 10px; border-radius: 4px; }
-        button { background: #1DB954; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; }
-        
-        /* List Styling */
-        .song-item { background: #181818; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; align-items: center; gap: 15px; }
-        .song-info { flex-grow: 1; }
-        .song-info h4 { margin: 0; }
-        .song-info p { margin: 5px 0 0; color: #b3b3b3; font-size: 14px; }
-        .btn-delete { background: #ff4d4d; font-size: 12px; padding: 5px 10px; }
-        audio { height: 30px; filter: invert(100%); }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reyhan Fahri | Portofolio Profil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>🎵 My Playlist</h1>
-    </div>
+    <nav id="navbar">
+        <div class="logo">RF<span>HP.</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Tentang</a></li>
+            <li><a href="#skills">Keahlian</a></li>
+            <li><a href="#projects">Proyek</a></li>
+            <li><a href="#contact">Kontak</a></li>
+        </ul>
+    </nav>
 
-    <div class="form-box">
-        <h3>Tambah Lagu Baru</h3>
-        <input type="text" id="title" placeholder="Judul Lagu">
-        <input type="text" id="artist" placeholder="Nama Penyanyi">
-        <input type="text" id="url" placeholder="URL File MP3 (Link)">
-        <button onclick="addSong()">TAMBAH</button>
-        <p style="font-size: 12px; color: #b3b3b3; margin-top: 10px;">*Gunakan link URL MP3 (misal dari Google Drive/Dropbox)</p>
-    </div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in">Halo, Saya <span>Reyhan Fahri</span></h1>
+            <p class="fade-in">Hartono Putra</p>
+            <p class="description">Junior Web Developer | Tech Enthusiast | Student</p>
+            <a href="#about" class="btn">Kenali Saya <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </section>
 
-    <div id="playlist"></div>
-</div>
+    <section id="about" class="container">
+        <h2 class="section-title">Tentang Saya</h2>
+        <div class="about-flex">
+            <div class="about-text">
+                <p>Halo! Saya <strong>Reyhan Fahri Hartono Putra</strong>. Saya adalah seorang yang bersemangat dalam dunia teknologi digital. Saya senang mempelajari hal-hal baru, mulai dari desain visual hingga logika pemrograman.</p>
+                <p>Misi saya adalah membangun solusi digital yang tidak hanya berfungsi dengan baik, tetapi juga memiliki estetika yang memanjakan mata pengguna.</p>
+            </div>
+        </div>
+    </section>
 
-<script>
-    // Fungsi memuat lagu dari LocalStorage saat web dibuka
-    window.onload = function() {
-        displaySongs();
-    };
+    <section id="skills" class="bg-light">
+        <div class="container">
+            <h2 class="section-title">Keahlian</h2>
+            <div class="skills-grid">
+                <div class="skill-card"><i class="fab fa-html5"></i> <h3>HTML5</h3></div>
+                <div class="skill-card"><i class="fab fa-css3-alt"></i> <h3>CSS3</h3></div>
+                <div class="skill-card"><i class="fab fa-js"></i> <h3>JavaScript</h3></div>
+                <div class="skill-card"><i class="fas fa-paint-brush"></i> <h3>UI Design</h3></div>
+            </div>
+        </div>
+    </section>
 
-    function addSong() {
-        const title = document.getElementById('title').value;
-        const artist = document.getElementById('artist').value;
-        const url = document.getElementById('url').value;
-
-        if(title && artist && url) {
-            const newSong = { id: Date.now(), title, artist, url };
-            
-            // Ambil data lama dari LocalStorage
-            let songs = JSON.parse(localStorage.getItem('mySongs')) || [];
-            songs.push(newSong);
-            
-            // Simpan kembali
-            localStorage.setItem('mySongs', JSON.stringify(songs));
-            
-            // Reset input & tampilkan
-            document.getElementById('title').value = '';
-            document.getElementById('artist').value = '';
-            document.getElementById('url').value = '';
-            displaySongs();
-        } else {
-            alert("Isi semua data ya!");
-        }
-    }
-
-    function displaySongs() {
-        const playlist = document.getElementById('playlist');
-        playlist.innerHTML = '';
-        const songs = JSON.parse(localStorage.getItem('mySongs')) || [];
-
-        songs.forEach(song => {
-            playlist.innerHTML += `
-                <div class="song-item">
-                    <div class="song-info">
-                        <h4>${song.title}</h4>
-                        <p>${song.artist}</p>
-                    </div>
-                    <audio controls>
-                        <source src="${song.url}" type="audio/mpeg">
-                    </audio>
-                    <button class="btn-delete" onclick="deleteSong(${song.id})">Hapus</button>
+    <section id="projects" class="container">
+        <h2 class="section-title">Proyek Saya</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-img"></div>
+                <div class="project-info">
+                    <h3>Web Personal</h3>
+                    <p>Membangun portofolio responsif dengan HTML, CSS, dan JS.</p>
                 </div>
-            `;
-        });
-    }
+            </div>
+            <div class="project-card">
+                <div class="project-img"></div>
+                <div class="project-info">
+                    <h3>Sistem Inventaris</h3>
+                    <p>Aplikasi sederhana untuk manajemen data barang.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function deleteSong(id) {
-        let songs = JSON.parse(localStorage.getItem('mySongs')) || [];
-        songs = songs.filter(song => song.id !== id);
-        localStorage.setItem('mySongs', JSON.stringify(songs));
-        displaySongs();
-    }
-</script>
+    <section id="contact" class="bg-dark">
+        <div class="container">
+            <h2 class="section-title">Hubungi Saya</h2>
+            <p>Tertarik untuk bekerja sama atau sekadar menyapa?</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="mailto:email@kamu.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
 
+    <footer>
+        <p>&copy; 2026 Reyhan Fahri Hartono Putra. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
