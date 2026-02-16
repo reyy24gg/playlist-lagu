@@ -1,48 +1,31 @@
-// Mengubah tampilan Navbar saat Scroll
+// Navigasi tetap solid putih
 window.addEventListener("scroll", function() {
     const navbar = document.getElementById("navbar");
-    if (window.scrollY > 100) {
-        navbar.style.background = "rgba(255, 255, 255, 0.95)";
+    if (window.scrollY > 50) {
         navbar.style.padding = "10px 10%";
-        navbar.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
     } else {
-        navbar.style.background = "transparent";
-        navbar.style.padding = "20px 10%";
-        navbar.style.boxShadow = "none";
+        navbar.style.padding = "15px 10%";
     }
 });
 
-// Efek Muncul Saat Scroll (Scroll Reveal)
-const sections = document.querySelectorAll('section');
-
-const options = {
-    threshold: 0.2
-};
-
-const observer = new IntersectionObserver(function(entries, observer) {
+// Efek muncul perlahan saat scroll
+const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('appear');
-        observer.unobserve(entry.target);
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+        }
     });
-}, options);
+}, { threshold: 0.1 });
 
-sections.forEach(section => {
-    section.classList.add('fade-in-section');
+document.querySelectorAll('section').forEach(section => {
+    section.classList.add('hidden');
     observer.observe(section);
 });
 
-// Tambahkan CSS sederhana untuk animasi reveal secara dinamis
+// CSS tambahan untuk animasi lewat JS
 const style = document.createElement('style');
 style.textContent = `
-    .fade-in-section {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    .appear {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-    }
+    .hidden { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .show { opacity: 1; transform: translateY(0); }
 `;
 document.head.appendChild(style);

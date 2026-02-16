@@ -1,10 +1,10 @@
-/* Variabel Warna */
 :root {
-    --primary: #3498db;
+    --primary: #3498db; /* Warna Biru */
     --dark: #2c3e50;
-    --light: #ecf0f1;
+    --light: #f8f9fa;
     --accent: #f1c40f;
     --text: #333;
+    --white: #ffffff;
 }
 
 * {
@@ -16,58 +16,74 @@
 }
 
 body {
-    background-color: #fff;
+    background-color: var(--light);
     color: var(--text);
-    overflow-x: hidden;
 }
 
-.container { padding: 80px 10%; }
-.bg-light { background-color: var(--light); }
-.bg-dark { background-color: var(--dark); color: white; }
-
-/* Navigation */
+/* --- Navigation Update --- */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10%;
+    padding: 15px 10%;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    transition: 0.4s;
+    background: var(--white); /* Background Putih */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.logo { font-size: 24px; font-weight: 800; color: var(--dark); }
+.logo { font-size: 24px; font-weight: 800; color: #000; }
 .logo span { color: var(--primary); }
 
 .nav-links { display: flex; list-style: none; }
 .nav-links li { margin-left: 25px; }
 .nav-links a {
     text-decoration: none;
-    color: var(--dark);
+    color: #000; /* Text Hitam */
     font-weight: 600;
     transition: 0.3s;
 }
-.nav-links a:hover { color: var(--primary); }
+.nav-links a:hover { 
+    color: var(--primary); /* Hover Biru */
+}
 
-/* Hero */
+/* --- Hero Section Update (Profile Card) --- */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
-                url('https://files.catbox.moe/j4zihv.jpg');
-    background-size: cover;
-    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    text-align: center;
+    padding: 0 10%;
+    background: #f0f2f5; /* Background bersih tanpa foto full */
 }
 
-.hero h1 { font-size: 4rem; margin-bottom: 10px; }
-.hero h1 span { color: var(--accent); }
-.hero .description { font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.8; }
+.profile-card {
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    max-width: 900px;
+    width: 100%;
+    gap: 40px;
+}
+
+.profile-img img {
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.profile-info { text-align: left; }
+.profile-info h1 { font-size: 2.5rem; color: #000; line-height: 1.2; }
+.profile-info h1 span { color: var(--primary); }
+.name-sub { font-size: 1.5rem; font-weight: 500; color: var(--dark); margin-bottom: 10px; }
+.description { font-size: 1rem; color: #666; margin-bottom: 25px; }
 
 .btn {
     display: inline-block;
@@ -75,81 +91,39 @@ nav {
     background: var(--primary);
     color: white;
     text-decoration: none;
-    border-radius: 30px;
+    border-radius: 8px;
     font-weight: bold;
     transition: 0.3s;
 }
-.btn:hover { background: var(--accent); color: var(--dark); transform: translateY(-5px); }
+.btn:hover { background: var(--dark); transform: translateY(-3px); }
 
-/* Section Title */
-.section-title {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-    text-align: center;
-}
-.section-title::after {
-    content: '';
-    width: 60px;
-    height: 4px;
-    background: var(--primary);
-    display: block;
-    margin: 10px auto;
-}
+/* Section & Skills */
+.container { padding: 80px 10%; }
+.section-title { font-size: 2rem; margin-bottom: 40px; text-align: center; }
+.bg-light { background-color: var(--white); }
+.bg-dark { background-color: var(--dark); color: white; padding: 60px 0; text-align: center;}
 
-/* Skills */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
 }
-
 .skill-card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    transition: 0.3s;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-.skill-card i { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
-.skill-card:hover { transform: translateY(-10px); background: var(--primary); color: white; }
-.skill-card:hover i { color: white; }
-
-/* Projects */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-.project-card {
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-.project-img { height: 200px; background: #ddd; }
-.project-info { padding: 20px; }
-
-/* Social Links */
-.social-links { margin-top: 20px; }
-.social-links a {
-    color: white;
-    font-size: 2rem;
-    margin: 0 15px;
-    transition: 0.3s;
-}
-.social-links a:hover { color: var(--accent); }
-
-footer {
+    background: var(--light);
     padding: 20px;
+    border-radius: 10px;
     text-align: center;
-    background: #1a252f;
-    color: white;
-    font-size: 0.9rem;
+    transition: 0.3s;
 }
+.skill-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
 
-/* Responsivitas */
+/* Responsive */
 @media (max-width: 768px) {
-    .hero h1 { font-size: 2.5rem; }
-    .nav-links { display: none; } /* Sederhanakan untuk mobile */
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    .profile-info { text-align: center; }
+    .nav-links { display: none; }
 }
